@@ -1,0 +1,57 @@
+{
+  "name": "@npm-wharf/k8s-tickbot",
+  "version": "1.0.0",
+  "description": "utilities for backup and restoration of TICK stack artifacts",
+  "main": "./src/index",
+  "scripts": {
+    "release": "standard-version",
+    "pretest": "standard",
+    "test": "mocha spec/*.spec.js",
+    "coverage": "nyc npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/npm-wharf/k8s-tickbot.git"
+  },
+  "keywords": [
+    "TICK",
+    "Kubernetes"
+  ],
+  "author": "Alex Robson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/npm-wharf/k8s-tickbot/issues"
+  },
+  "homepage": "https://github.com/npm-wharf/k8s-tickbot#readme",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "bole": "^3.0.2",
+    "mkdirp": "^0.5.1",
+    "request": "^2.83.0",
+    "rimraf": "^2.6.2",
+    "tar": "^4.1.1",
+    "yargs": "^10.0.3"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "coveralls": "^3.0.0",
+    "mocha": "^4.0.1",
+    "nock": "^9.1.4",
+    "nyc": "^11.4.1",
+    "sinon": "^4.1.2",
+    "sinon-chai": "^2.14.0",
+    "standard": "^10.0.3",
+    "standard-version": "^4.2.0"
+  },
+  "standard": {
+    "env": [
+      "mocha"
+    ],
+    "global": [
+      "nock",
+      "sinon",
+      "expect"
+    ]
+  }
+}
