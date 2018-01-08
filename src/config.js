@@ -16,9 +16,6 @@ module.exports = {
     port: process.env.CHRONOGRAF_PORT || '8888'
   },
   storage: {
-    bucket: process.env.OBJECT_STORE || 'metrics',
-    account: process.env.OBJECT_STORE_ACCOUNT,
-    password: process.env.OBJECT_STORE_PASS,
-    keyfile: process.env.OBJECT_STORE_KEYFILE
+    bucket: process.env.OBJECT_STORE || 'metrics'
   }
 }

@@ -21,10 +21,7 @@ Endpoints and connection configuration are set via environment variables:
  * `CHRONOGRAF_PORT` - defaults to `8888`
 
  * `OBJECT_STORE` - the object store where tasks and grafs are stored and retrieved from, defaults to `metrics`
- * `OBJECT_STORE_ACCOUNT` - the account with access to the object store
- * `OBJECT_STORE_PASS` - a key/password for the account used to access the object store
- * `OBJECT_STORE_KEYFILE` - path to a key file used to access the object store
-
+ 
  * BASE_PATH - defaults to the processes' path
  * DATA_PATH - a subfolder off the base path, defaults to `data`
 
