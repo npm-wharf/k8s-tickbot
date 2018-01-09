@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "utilities for backup and restoration of TICK stack artifacts",
   "main": "./src/index",
+  "bin": {
+    "tickbot": "./bin/tickbot.js"
+  },
   "scripts": {
     "release": "standard-version",
     "pretest": "standard",
@@ -24,6 +27,8 @@
   },
   "homepage": "https://github.com/npm-wharf/k8s-tickbot#readme",
   "dependencies": {
+    "@google-cloud/storage": "^1.5.2",
+    "aws-sdk": "^2.179.0",
     "bluebird": "^3.5.1",
     "bole": "^3.0.2",
     "mkdirp": "^0.5.1",
