@@ -91,8 +91,10 @@ function getDashboards (config) {
 
 function getQueries (config, queries) {
   const queryMap = queries.reduce((map, query) => {
-    const index = parseInt(path.basename(query))
-    map[index - 1] = query
+    if (typeof query === 'string') {
+      const index = parseInt(path.basename(query))
+      map[index - 1] = query
+    }
     return map
   }, [])
   const filtered = queryMap.reduce((acc, item) => {

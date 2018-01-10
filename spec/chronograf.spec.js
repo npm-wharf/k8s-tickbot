@@ -28,7 +28,12 @@ const dashboard3 = {
   cells: [
     {
       queries: [
-        'chronograf/v1/queries/4'
+        {
+          id: 4,
+          url: 'chronograf/v1/queries/4',
+          query: 'SELECT mean(thunks) from thunk GROUP BY time(1s)',
+          db: 'test'
+        }
       ]
     }
   ]
@@ -52,13 +57,7 @@ const query3 = {
   query: 'SELECT mean(thinks) from think GROUP BY time(1s)',
   db: 'test'
 }
-const query4 = {
-  id: 4,
-  url: 'chronograf/v1/queries/4',
-  query: 'SELECT mean(thunks) from thunk GROUP BY time(1s)',
-  db: 'test'
-}
-const queries = [ query1, query2, query3, query4 ]
+const queries = [ query1, query2, query3 ]
 
 describe('Chronograf', function () {
   describe('when retrieving graphs from chronograf', function () {
@@ -85,10 +84,6 @@ describe('Chronograf', function () {
       nock('http://localhost:8888')
         .get('/chronograf/v1/queries/3')
         .reply(200, query3)
-
-      nock('http://localhost:8888')
-        .get('/chronograf/v1/queries/4')
-        .reply(200, query4)
 
       chronograf = Chrono({
         chronograf: {
@@ -124,10 +119,6 @@ describe('Chronograf', function () {
 
       nock('http://localhost:8888')
         .post('/chronograf/v1/queries', query3)
-        .reply(201)
-
-      nock('http://localhost:8888')
-        .post('/chronograf/v1/queries', query4)
         .reply(201)
 
       nock('http://localhost:8888')
