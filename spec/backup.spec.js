@@ -155,10 +155,7 @@ describe('Backup', function () {
           ])
           .resolves('./spec/metrics.tgz')
         bucketMock.expects('uploadFile')
-          .withArgs({
-            basePath: './spec',
-            dataPath: 'files'
-          }, './spec/metrics.tgz')
+          .withArgs('./spec/metrics.tgz')
           .rejects(new Error('oops'))
 
         backup = Backup({
@@ -203,10 +200,7 @@ describe('Backup', function () {
           ])
           .resolves('./spec/metrics.tgz')
         bucketMock.expects('uploadFile')
-          .withArgs({
-            basePath: './spec',
-            dataPath: 'files'
-          }, './spec/metrics.tgz')
+          .withArgs('./spec/metrics.tgz')
           .resolves({})
 
         backup = Backup({

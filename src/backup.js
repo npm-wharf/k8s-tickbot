@@ -91,7 +91,7 @@ function onTasksFailed (error) {
 }
 
 function onTgzCreated (config, bucket, tgz) {
-  return bucket.uploadFile(config, tgz)
+  return bucket.uploadFile(tgz)
     .then(
       () => {
         log.info(`Backup completed successfully.`)
