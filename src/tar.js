@@ -40,7 +40,7 @@ function zipFiles (relativePath, files) {
       follow: true,
       C: relativePath
     },
-    files
+    files.map(f => `./${path.basename(f)}`)
   ).then(
     () => {
       log.info(`Created tarball with files '${files.join(', ')}'`)
