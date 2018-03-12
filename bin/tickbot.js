@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const config = require('../src/config')
-const influx = require('../src/influx')
+const influx = require('../src/influx')(config)
 const chronograf = require('../src/chronograf')(config)
 const kapacitor = require('../src/kapacitor')(config)
 const bucketApi = require('../src/bucketApi')
