@@ -9,7 +9,7 @@ describe('Influx', function () {
     let influx
     before(function () {
       nock('http://localhost:8086')
-        .post(`/query?q=%22CREATE%20DATABASE%20%22test%22%22`)
+        .post(`/query?q=CREATE%20DATABASE%20%22test%22`)
         .reply(201)
       influx = Influx({
         influx: {
@@ -34,7 +34,7 @@ describe('Influx', function () {
     let influx
     before(function () {
       nock('http://localhost:8086')
-        .post(`/query?q=%22CREATE%20DATABASE%20%22test%22%22`)
+        .post(`/query?q=CREATE%20DATABASE%20%22test%22`)
         .matchHeader('authorization', 'Basic YWRtaW46dDNzdGwwbA==')
         .reply(201)
       influx = Influx({
@@ -62,7 +62,7 @@ describe('Influx', function () {
     let influx
     before(function () {
       nock('http://localhost:8086')
-        .post(`/query?q=%22CREATE%20DATABASE%20%22test%22%20WITH%20DURATION%207d%20NAME%20%22weekly%22%22`)
+        .post(`/query?q=CREATE%20DATABASE%20%22test%22%20WITH%20DURATION%207d%20NAME%20%22weekly%22`)
         .reply(201)
       influx = Influx({
         influx: {
@@ -89,7 +89,7 @@ describe('Influx', function () {
     let influx
     before(function () {
       nock('http://localhost:8086')
-        .post(`/query?q=%22CREATE%20DATABASE%20%22test%22%20WITH%20DURATION%207d%20REPLICATION%201%20NAME%20%22weekly%22%22`)
+        .post(`/query?q=CREATE%20DATABASE%20%22test%22%20WITH%20DURATION%207d%20REPLICATION%201%20NAME%20%22weekly%22`)
         .reply(201)
       influx = Influx({
         influx: {
@@ -117,7 +117,7 @@ describe('Influx', function () {
     let influx
     before(function () {
       nock('http://localhost:8086')
-        .post(`/query?q=%22CREATE%20DATABASE%20%22test%22%20WITH%20DURATION%207d%20REPLICATION%201%20SHARD%20DURATION%201h%20NAME%20%22weekly%22%22`)
+        .post(`/query?q=CREATE%20DATABASE%20%22test%22%20WITH%20DURATION%207d%20REPLICATION%201%20SHARD%20DURATION%201h%20NAME%20%22weekly%22`)
         .reply(201)
       influx = Influx({
         influx: {

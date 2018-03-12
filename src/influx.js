@@ -15,7 +15,7 @@ function create (config, props) {
     return acc
   }, [])
   const fullQuery = qualifiers.length ? [query, 'WITH'].concat(qualifiers).join(' ') : query
-  const url = `http://${config.influx.host}:${config.influx.port}/query?q="${fullQuery}"`
+  const url = `http://${config.influx.host}:${config.influx.port}/query?q=${fullQuery}`
   const req = {url}
   if (config.influx.username) {
     req.auth = {
