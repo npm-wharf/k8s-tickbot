@@ -20,7 +20,7 @@ function build () {
 }
 
 function handle (influx, argv) {
-  return influx.create(argv.database, argv)
+  return influx.create(argv)
 }
 
 module.exports = function (config, influx) {
