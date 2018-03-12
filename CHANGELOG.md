@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/npm-wharf/k8s-tickbot/compare/v1.1.0...v1.1.1) (2018-03-12)
+
+
+### Bug Fixes
+
+* correct defect causing wrong arguments to get passed from command module to influx module resulting in invalid URL ([8a5b87c](https://github.com/npm-wharf/k8s-tickbot/commit/8a5b87c))
+
+
+
 <a name="1.1.0"></a>
 # 1.1.0 (2018-03-12)
 
