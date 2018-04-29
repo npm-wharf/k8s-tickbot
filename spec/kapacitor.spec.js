@@ -17,7 +17,7 @@ const task2 = {
   script: `stream|from().measurement('memory')`
 }
 const task3 = {
-  id: '3',
+  id: 'a-string',
   type: 'stream',
   status: 'enabled',
   dbrps: [{db: 'test', rp: 'weekly'}],
@@ -30,7 +30,7 @@ const task4 = {
   dbrps: [{db: 'test', rp: 'weekly'}],
   script: `stream|from().measurement('memory')`
 }
-const tasks = [ task1, task2, task3, task4 ]
+const tasks = [ task1, task2, task4, task3 ]
 
 describe('Kapacitor', function () {
   describe('when retrieving alerts from kapacitor', function () {

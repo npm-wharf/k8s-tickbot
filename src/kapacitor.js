@@ -52,16 +52,28 @@ function getTasks (config) {
 }
 
 function sortTasks (tasks) {
-  const taskMap = tasks.reduce((acc, task) => {
-    acc[task.id] = task
-    return acc
-  }, [])
-  return taskMap.reduce((acc, task) => {
-    if (task) {
-      acc.push(task)
+  return tasks.sort((a, b) => {
+    const aIsNumber = Number.isInteger(a.id)
+    const bIsNumber = Number.isInteger(b.id)
+    const aComp = aIsNumber ? parseInt(a.id) : a.id
+    const bComp = bIsNumber ? parseInt(b.id) : b.id
+    if (
+      (aIsNumber && bIsNumber) ||
+      (!aIsNumber && !bIsNumber)
+     ) {
+      if (aComp === bComp) {
+        return 0
+      } else if (aComp > bComp) {
+        return 1
+      } else {
+        return -1
+      }
+    } else if (aIsNumber) {
+      return -1
+    } else if (bIsNumber) {
+      return 1
     }
-    return acc
-  }, [])
+  })
 }
 
 module.exports = function (config) {
