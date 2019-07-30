@@ -107,11 +107,11 @@ describe('Backup', function () {
           .resolves({})
         tarMock.expects('zipFiles')
           .withArgs(`${LOCAL_PATH}/spec/tmp`,
-          [
-            `${LOCAL_PATH}/spec/tmp/graphs.json`,
-            `${LOCAL_PATH}/spec/tmp/tasks.json`,
-            `${LOCAL_PATH}/spec/tmp/info.json`
-          ])
+            [
+              `${LOCAL_PATH}/spec/tmp/graphs.json`,
+              `${LOCAL_PATH}/spec/tmp/tasks.json`,
+              `${LOCAL_PATH}/spec/tmp/info.json`
+            ])
           .rejects(new Error('nope'))
 
         backup = Backup({
@@ -148,11 +148,11 @@ describe('Backup', function () {
           .resolves({})
         tarMock.expects('zipFiles')
           .withArgs(`${LOCAL_PATH}/spec/files`,
-          [
-            `${LOCAL_PATH}/spec/files/graphs.json`,
-            `${LOCAL_PATH}/spec/files/tasks.json`,
-            `${LOCAL_PATH}/spec/files/info.json`
-          ])
+            [
+              `${LOCAL_PATH}/spec/files/graphs.json`,
+              `${LOCAL_PATH}/spec/files/tasks.json`,
+              `${LOCAL_PATH}/spec/files/info.json`
+            ])
           .resolves('./spec/metrics.tgz')
         bucketMock.expects('uploadFile')
           .withArgs('./spec/metrics.tgz')
@@ -193,11 +193,11 @@ describe('Backup', function () {
           .resolves({})
         tarMock.expects('zipFiles')
           .withArgs(`${LOCAL_PATH}/spec/files`,
-          [
-            `${LOCAL_PATH}/spec/files/graphs.json`,
-            `${LOCAL_PATH}/spec/files/tasks.json`,
-            `${LOCAL_PATH}/spec/files/info.json`
-          ])
+            [
+              `${LOCAL_PATH}/spec/files/graphs.json`,
+              `${LOCAL_PATH}/spec/files/tasks.json`,
+              `${LOCAL_PATH}/spec/files/info.json`
+            ])
           .resolves('./spec/metrics.tgz')
         bucketMock.expects('uploadFile')
           .withArgs('./spec/metrics.tgz')
@@ -286,10 +286,10 @@ describe('Backup', function () {
           })
         tarMock.expects('unzipFiles')
           .withArgs(path.resolve('./spec/tmp'),
-          {
-            file: './spec/metrics.tgz',
-            dir: './spec'
-          })
+            {
+              file: './spec/metrics.tgz',
+              dir: './spec'
+            })
           .resolves(undefined)
 
         backup = Backup({
@@ -323,10 +323,10 @@ describe('Backup', function () {
           })
         tarMock.expects('unzipFiles')
           .withArgs(path.resolve('./spec/tmp'),
-          {
-            file: './spec/metrics.tgz',
-            dir: './spec'
-          })
+            {
+              file: './spec/metrics.tgz',
+              dir: './spec'
+            })
           .resolves({
             graphs: 'chronograf-data',
             tasks: 'kapacitor-data'
@@ -371,10 +371,10 @@ describe('Backup', function () {
           })
         tarMock.expects('unzipFiles')
           .withArgs(path.resolve('./spec/tmp'),
-          {
-            file: './spec/metrics.tgz',
-            dir: './spec'
-          })
+            {
+              file: './spec/metrics.tgz',
+              dir: './spec'
+            })
           .resolves({
             graphs: 'chronograf-data',
             tasks: 'kapacitor-data'
@@ -419,10 +419,10 @@ describe('Backup', function () {
           })
         tarMock.expects('unzipFiles')
           .withArgs(path.resolve('./spec/tmp'),
-          {
-            file: './spec/metrics.tgz',
-            dir: './spec'
-          })
+            {
+              file: './spec/metrics.tgz',
+              dir: './spec'
+            })
           .resolves({
             graphs: 'chronograf-data',
             tasks: 'kapacitor-data'

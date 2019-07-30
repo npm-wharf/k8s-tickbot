@@ -356,9 +356,9 @@ describe('Bucket', function () {
             .resolves({})
 
           return bucket.uploadFile(fullPath)
-          .then(
-            x => { result = x }
-          )
+            .then(
+              x => { result = x }
+            )
         })
 
         it('should return undefined', function () {

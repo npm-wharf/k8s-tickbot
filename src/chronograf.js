@@ -19,7 +19,7 @@ function addDashboards (config, dashboards) {
 
 function addDashboard (config, dashboard) {
   const url = `http://${config.chronograf.host}:${config.chronograf.port}/chronograf/v1/dashboards`
-  const req = {url, body: JSON.stringify(dashboard)}
+  const req = { url, body: JSON.stringify(dashboard) }
   return new Promise((resolve, reject) => {
     request.post(req, (err, response, body) => {
       if (err) {
@@ -41,7 +41,7 @@ function addQueries (config, queries) {
 
 function addQuery (config, query) {
   const url = `http://${config.chronograf.host}:${config.chronograf.port}/chronograf/v1/queries`
-  const req = {url, body: JSON.stringify(query)}
+  const req = { url, body: JSON.stringify(query) }
   return new Promise((resolve, reject) => {
     request.post(req, (err, response, body) => {
       if (err) {
@@ -69,7 +69,7 @@ function getAll (config) {
 
 function getDashboards (config) {
   const url = `http://${config.chronograf.host}:${config.chronograf.port}/chronograf/v1/dashboards`
-  const req = {url}
+  const req = { url }
   return new Promise((resolve, reject) => {
     request.get(req, (err, response, body) => {
       if (err) {
@@ -108,7 +108,7 @@ function getQueries (config, queries) {
 
 function getQuery (config, query) {
   const url = `http://${config.chronograf.host}:${config.chronograf.port}/${query}`
-  const req = {url}
+  const req = { url }
   return new Promise((resolve, reject) => {
     request.get(req, (err, response, body) => {
       if (err) {

@@ -1,54 +1,51 @@
-const request = require('request')
-const Promise = require('bluebird')
+const fetch = require('node-fetch')
 
-function addTasks (config, tasks) {
+async function addTasks (config, tasks) {
   const list = tasks.tasks ? tasks.tasks : tasks
-  return Promise.mapSeries(list, addTask.bind(null, config))
-    .then(
-      () => true
-    )
+
+  for (const task of list) {
+    await addTask(config, task)
+  }
+  return true
 }
 
-function addTask (config, task) {
+async function addTask (config, task) {
+  const { id } = task
   const url = `http://${config.kapacitor.host}:${config.kapacitor.port}/kapacitor/v1/tasks`
-  const req = {url, body: JSON.stringify(task)}
-  return new Promise((resolve, reject) => {
-    request.post(req, (err, response, body) => {
-      if (err) {
-        reject(err)
-      } else {
-        if (response.statusCode >= 200 && response.statusCode < 400) {
-          resolve(body)
-        } else {
-          reject(new Error(`Attempt to post Task '${task.id}' to Kapacitor failed with status code '${response.statusCode}'`))
-        }
-      }
-    })
-  })
+
+  const getReq = await fetch(`${url}/${id}`)
+
+  if (getReq.status === 404) {
+    // new task
+    const req = { body: JSON.stringify(task), method: 'POST' }
+    const resp = await fetch(url, req)
+    if (resp.status >= 400) {
+      throw new Error(`Attempt to post Task '${task.id}' to Kapacitor failed with status code '${resp.status}'`)
+    }
+    return resp.json()
+  } else if (getReq.status === 200) {
+    // update task
+    const req = { body: JSON.stringify(task), method: 'PATCH' }
+    const resp = await fetch(url, req)
+    if (resp.status >= 400) {
+      throw new Error(`Attempt to post Task '${task.id}' to Kapacitor failed with status code '${resp.status}'`)
+    }
+    return resp.json()
+  } else {
+    throw new Error(`unepxected status code reading ${url}/${id} from Kapacitor: ${getReq.status}`)
+  }
 }
 
-function getTasks (config) {
+async function getTasks (config) {
   const url = `http://${config.kapacitor.host}:${config.kapacitor.port}/kapacitor/v1/tasks`
-  const req = {url}
-  return new Promise((resolve, reject) => {
-    request.get(req, (err, response, body) => {
-      if (err) {
-        reject(err)
-      } else {
-        if (response.statusCode >= 200 && response.statusCode < 400) {
-          try {
-            const list = JSON.parse(body).tasks
-            const sorted = sortTasks(list)
-            resolve({ tasks: sorted })
-          } catch (e) {
-            reject(new Error(`Received an invalid response from Kapacitor when requesting tasks (could not parse).`))
-          }
-        } else {
-          reject(new Error(`Attempt to fetch tasks from Kapacitor failed with status code '${response.statusCode}'`))
-        }
-      }
-    })
-  })
+
+  const response = await fetch(url)
+  if (response.status >= 400) {
+    throw new Error(`Attempt to fetch tasks from Kapacitor failed with status code '${response.status}'`)
+  }
+  const { tasks } = await response.json()
+  const sorted = sortTasks(tasks)
+  return { tasks: sorted }
 }
 
 function sortTasks (tasks) {
@@ -60,7 +57,7 @@ function sortTasks (tasks) {
     if (
       (aIsNumber && bIsNumber) ||
       (!aIsNumber && !bIsNumber)
-     ) {
+    ) {
       if (aComp === bComp) {
         return 0
       } else if (aComp > bComp) {
