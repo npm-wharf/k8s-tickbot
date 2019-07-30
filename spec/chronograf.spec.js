@@ -38,7 +38,7 @@ const dashboard3 = {
     }
   ]
 }
-const dashboards = [ dashboard1, dashboard2, dashboard3 ]
+const dashboards = [dashboard1, dashboard2, dashboard3]
 const query1 = {
   id: 1,
   url: 'chronograf/v1/queries/1',
@@ -57,7 +57,7 @@ const query3 = {
   query: 'SELECT mean(thinks) from think GROUP BY time(1s)',
   db: 'test'
 }
-const queries = [ query1, query2, query3 ]
+const queries = [query1, query2, query3]
 
 describe('Chronograf', function () {
   describe('when retrieving graphs from chronograf', function () {
@@ -146,7 +146,7 @@ describe('Chronograf', function () {
         dashboards: dashboards,
         queries: queries
       })
-      .should.eventually.eql(true)
+        .should.eventually.eql(true)
     })
 
     after(function () {

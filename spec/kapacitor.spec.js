@@ -6,31 +6,31 @@ const task1 = {
   id: '1',
   type: 'stream',
   status: 'enabled',
-  dbrps: [{db: 'test', rp: 'weekly'}],
+  dbrps: [{ db: 'test', rp: 'weekly' }],
   script: `stream|from().measurement('cpu')`
 }
 const task2 = {
   id: '2',
   type: 'stream',
   status: 'enabled',
-  dbrps: [{db: 'test', rp: 'weekly'}],
+  dbrps: [{ db: 'test', rp: 'weekly' }],
   script: `stream|from().measurement('memory')`
 }
 const task3 = {
   id: 'a-string',
   type: 'stream',
   status: 'enabled',
-  dbrps: [{db: 'test', rp: 'weekly'}],
+  dbrps: [{ db: 'test', rp: 'weekly' }],
   script: `stream|from().measurement('cpu')`
 }
 const task4 = {
   id: '4',
   type: 'stream',
   status: 'enabled',
-  dbrps: [{db: 'test', rp: 'weekly'}],
+  dbrps: [{ db: 'test', rp: 'weekly' }],
   script: `stream|from().measurement('memory')`
 }
-const tasks = [ task1, task2, task4, task3 ]
+const tasks = [task1, task2, task4, task3]
 
 describe('Kapacitor', function () {
   describe('when retrieving alerts from kapacitor', function () {
@@ -72,19 +72,25 @@ describe('Kapacitor', function () {
     before(function () {
       nock('http://localhost:9092')
         .post('/kapacitor/v1/tasks', task1)
-        .reply(201)
+        .reply(200, task1)
 
       nock('http://localhost:9092')
         .post('/kapacitor/v1/tasks', task2)
-        .reply(201)
+        .reply(200, task2)
+
+      nock('http://localhost:9092')
+        .get('/kapacitor/v1/tasks/1').reply(404)
+        .get('/kapacitor/v1/tasks/2').reply(404)
+        .get('/kapacitor/v1/tasks/a-string').reply(404)
+        .get('/kapacitor/v1/tasks/4').reply(200, task4)
 
       nock('http://localhost:9092')
         .post('/kapacitor/v1/tasks', task3)
-        .reply(201)
+        .reply(200, task3)
 
       nock('http://localhost:9092')
-        .post('/kapacitor/v1/tasks', task4)
-        .reply(201)
+        .patch('/kapacitor/v1/tasks', task4)
+        .reply(200, task4)
 
       kapacitor = Kapacitor({
         kapacitor: {

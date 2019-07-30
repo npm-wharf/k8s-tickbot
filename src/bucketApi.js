@@ -13,7 +13,7 @@ if (process.env.GS_PROJECT_ID) {
   })
 } else {
   const AWS = require('aws-sdk')
-  s3 = new AWS.S3({apiVersion: '2006-03-01'})
+  s3 = new AWS.S3({ apiVersion: '2006-03-01' })
 }
 
 module.exports = {
