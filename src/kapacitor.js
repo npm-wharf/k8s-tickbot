@@ -26,9 +26,9 @@ async function addTask (config, task) {
   } else if (getReq.status === 200) {
     // update task
     const req = { body: JSON.stringify(task), method: 'PATCH' }
-    const resp = await fetch(url, req)
+    const resp = await fetch(`${url}/${id}`, req)
     if (resp.status >= 400) {
-      throw new Error(`Attempt to post Task '${task.id}' to Kapacitor failed with status code '${resp.status}'`)
+      throw new Error(`Attempt to patch Task '${task.id}' in Kapacitor failed with status code '${resp.status}'`)
     }
     return resp.json()
   } else {

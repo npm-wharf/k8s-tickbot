@@ -89,7 +89,7 @@ describe('Kapacitor', function () {
         .reply(200, task3)
 
       nock('http://localhost:9092')
-        .patch('/kapacitor/v1/tasks', task4)
+        .patch('/kapacitor/v1/tasks/4', task4)
         .reply(200, task4)
 
       kapacitor = Kapacitor({
