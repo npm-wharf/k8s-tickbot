@@ -5,8 +5,8 @@ const LOCAL_PATH = path.resolve('./')
 const Backup = require('../lib/backup')
 
 const bucket = {
-  uploadFile: () => {},
-  downloadFile: () => {}
+  uploadFile: async () => {},
+  downloadFile: async () => {}
 }
 
 const chronograf = {
@@ -125,7 +125,7 @@ describe('Backup', function () {
         chronoMock.verify()
         kapMock.verify()
         tarMock.verify()
-        expect(process.exit.calledWith(2)).to.eql(true)
+        expect(process.exit.calledWith(1)).to.eql(true)
       })
 
       after(function () {
