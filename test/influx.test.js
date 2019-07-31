@@ -1,6 +1,6 @@
 require('./setup')
 
-const Influx = require('../src/influx')
+const Influx = require('../lib/influx')
 
 // CREATE DATABASE "NOAA_water_database" WITH DURATION 3d REPLICATION 1 SHARD DURATION 1h NAME "liquid"
 

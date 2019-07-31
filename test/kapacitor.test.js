@@ -1,6 +1,6 @@
 require('./setup')
 
-const Kapacitor = require('../src/kapacitor')
+const Kapacitor = require('../lib/kapacitor')
 
 const task1 = {
   id: '1',

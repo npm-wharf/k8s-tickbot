@@ -1,6 +1,6 @@
 require('./setup')
 
-const Chrono = require('../src/chronograf')
+const Chrono = require('../lib/chronograf')
 
 const dashboard1 = {
   id: 1,

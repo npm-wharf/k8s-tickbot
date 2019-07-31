@@ -25,7 +25,7 @@ const s3API = {
   }
 }
 
-const Bucket = require('../src/bucket')
+const Bucket = require('../lib/bucket')
 
 describe('Bucket', function () {
   describe('with S3', function () {
@@ -34,12 +34,12 @@ describe('Bucket', function () {
         let s3Mock, bucket, result
         before(function () {
           const downloads = new EventEmitter()
-          const fullPath = path.resolve('./spec/data/metrics.tgz')
+          const fullPath = path.resolve('./test/data/metrics.tgz')
           bucket = Bucket(s3API, {
             storage: {
               bucket: 'test-bucket'
             },
-            basePath: './spec',
+            basePath: './test',
             dataPath: 'data'
           })
           s3Mock = sinon.mock(s3API.s3)
@@ -73,12 +73,12 @@ describe('Bucket', function () {
         let s3Mock, bucket, result, fullPath
         before(function () {
           const downloads = new EventEmitter()
-          fullPath = path.resolve('./spec/data/metrics.tgz')
+          fullPath = path.resolve('./test/data/metrics.tgz')
           bucket = Bucket(s3API, {
             storage: {
               bucket: 'test-bucket'
             },
-            basePath: './spec',
+            basePath: './test',
             dataPath: 'data'
           })
           s3Mock = sinon.mock(s3API.s3)
@@ -117,12 +117,12 @@ describe('Bucket', function () {
         let s3Mock, bucket, result
         before(function () {
           const uploads = new EventEmitter()
-          const fullPath = path.resolve('./spec/metrics.tgz')
+          const fullPath = path.resolve('./test/metrics.tgz')
           bucket = Bucket(s3API, {
             storage: {
               bucket: 'test-bucket'
             },
-            basePath: './spec',
+            basePath: './test',
             dataPath: 'data'
           })
           s3Mock = sinon.mock(s3API.s3)
@@ -157,12 +157,12 @@ describe('Bucket', function () {
         let s3Mock, bucket, result, fullPath
         before(function () {
           const uploads = new EventEmitter()
-          fullPath = path.resolve('./spec/metrics.tgz')
+          fullPath = path.resolve('./test/metrics.tgz')
           bucket = Bucket(s3API, {
             storage: {
               bucket: 'test-bucket'
             },
-            basePath: './spec',
+            basePath: './test',
             dataPath: 'data'
           })
           s3Mock = sinon.mock(s3API.s3)
@@ -197,7 +197,7 @@ describe('Bucket', function () {
     })
 
     after(function () {
-      rimraf.sync('./spec/data')
+      rimraf.sync('./test/data')
     })
   })
 
@@ -206,12 +206,12 @@ describe('Bucket', function () {
       describe('and download fails', function () {
         let gsMock, bucketMock, fileMock, bucket, result
         before(function () {
-          const fullPath = path.resolve('./spec/data/metrics.tgz')
+          const fullPath = path.resolve('./test/data/metrics.tgz')
           bucket = Bucket(gsAPI, {
             storage: {
               bucket: 'test-bucket'
             },
-            basePath: './spec',
+            basePath: './test',
             dataPath: 'data'
           })
           gsMock = sinon.mock(gsAPI.gs)
@@ -249,12 +249,12 @@ describe('Bucket', function () {
       describe('and download succeeds', function () {
         let gsMock, bucketMock, fileMock, bucket, result, fullPath
         before(function () {
-          fullPath = path.resolve('./spec/data/metrics.tgz')
+          fullPath = path.resolve('./test/data/metrics.tgz')
           bucket = Bucket(gsAPI, {
             storage: {
               bucket: 'test-bucket'
             },
-            basePath: './spec',
+            basePath: './test',
             dataPath: 'data'
           })
           gsMock = sinon.mock(gsAPI.gs)
@@ -300,12 +300,12 @@ describe('Bucket', function () {
       describe('and upload fails', function () {
         let gsMock, bucketMock, bucket, result
         before(function () {
-          const fullPath = path.resolve('./spec/metrics.tgz')
+          const fullPath = path.resolve('./test/metrics.tgz')
           bucket = Bucket(gsAPI, {
             storage: {
               bucket: 'test-bucket'
             },
-            basePath: './spec',
+            basePath: './test',
             dataPath: 'data'
           })
           gsMock = sinon.mock(gsAPI.gs)
@@ -336,12 +336,12 @@ describe('Bucket', function () {
       describe('and upload succeeds', function () {
         let gsMock, bucketMock, bucket, result, fullPath
         before(function () {
-          fullPath = path.resolve('./spec/metrics.tgz')
+          fullPath = path.resolve('./test/metrics.tgz')
           bucket = Bucket(gsAPI, {
             storage: {
               bucket: 'test-bucket'
             },
-            basePath: './spec',
+            basePath: './test',
             dataPath: 'data'
           })
           gsMock = sinon.mock(gsAPI.gs)
@@ -373,7 +373,7 @@ describe('Bucket', function () {
     })
 
     after(function () {
-      rimraf.sync('./spec/data')
+      rimraf.sync('./test/data')
     })
   })
 })

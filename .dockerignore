@@ -5,7 +5,6 @@ node_modules
 Dockerfile
 CHANGELOG.md
 README.md
-spec/
 test/
 docker-compose.yml
 package-lock.json
