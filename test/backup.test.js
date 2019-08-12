@@ -2,11 +2,11 @@ require('./setup')
 const rimraf = require('rimraf')
 const path = require('path')
 const LOCAL_PATH = path.resolve('./')
-const Backup = require('../src/backup')
+const Backup = require('../lib/backup')
 
 const bucket = {
-  uploadFile: () => {},
-  downloadFile: () => {}
+  uploadFile: async () => {},
+  downloadFile: async () => {}
 }
 
 const chronograf = {
@@ -46,7 +46,7 @@ describe('Backup', function () {
           .resolves({})
 
         backup = Backup({
-          basePath: './spec',
+          basePath: './test',
           dataPath: 'tmp'
         }, chronograf, kapacitor, tar, bucket)
         return backup.create()
@@ -59,7 +59,7 @@ describe('Backup', function () {
       })
 
       after(function () {
-        rimraf.sync('./spec/tmp')
+        rimraf.sync('./test/tmp')
       })
     })
 
@@ -76,7 +76,7 @@ describe('Backup', function () {
           .rejects(new Error('eaux neaux'))
 
         backup = Backup({
-          basePath: './spec',
+          basePath: './test',
           dataPath: 'tmp'
         }, chronograf, kapacitor, tar, bucket)
         return backup.create()
@@ -89,7 +89,7 @@ describe('Backup', function () {
       })
 
       after(function () {
-        rimraf.sync('./spec/tmp')
+        rimraf.sync('./test/tmp')
       })
     })
 
@@ -106,16 +106,16 @@ describe('Backup', function () {
         kapMock.expects('getTasks')
           .resolves({})
         tarMock.expects('zipFiles')
-          .withArgs(`${LOCAL_PATH}/spec/tmp`,
+          .withArgs(`${LOCAL_PATH}/test/tmp`,
             [
-              `${LOCAL_PATH}/spec/tmp/graphs.json`,
-              `${LOCAL_PATH}/spec/tmp/tasks.json`,
-              `${LOCAL_PATH}/spec/tmp/info.json`
+              `${LOCAL_PATH}/test/tmp/graphs.json`,
+              `${LOCAL_PATH}/test/tmp/tasks.json`,
+              `${LOCAL_PATH}/test/tmp/info.json`
             ])
           .rejects(new Error('nope'))
 
         backup = Backup({
-          basePath: './spec',
+          basePath: './test',
           dataPath: 'tmp'
         }, chronograf, kapacitor, tar, bucket)
         return backup.create()
@@ -125,11 +125,11 @@ describe('Backup', function () {
         chronoMock.verify()
         kapMock.verify()
         tarMock.verify()
-        expect(process.exit.calledWith(2)).to.eql(true)
+        expect(process.exit.calledWith(1)).to.eql(true)
       })
 
       after(function () {
-        rimraf.sync('./spec/tmp')
+        rimraf.sync('./test/tmp')
       })
     })
 
@@ -147,19 +147,19 @@ describe('Backup', function () {
         kapMock.expects('getTasks')
           .resolves({})
         tarMock.expects('zipFiles')
-          .withArgs(`${LOCAL_PATH}/spec/files`,
+          .withArgs(`${LOCAL_PATH}/test/files`,
             [
-              `${LOCAL_PATH}/spec/files/graphs.json`,
-              `${LOCAL_PATH}/spec/files/tasks.json`,
-              `${LOCAL_PATH}/spec/files/info.json`
+              `${LOCAL_PATH}/test/files/graphs.json`,
+              `${LOCAL_PATH}/test/files/tasks.json`,
+              `${LOCAL_PATH}/test/files/info.json`
             ])
-          .resolves('./spec/metrics.tgz')
+          .resolves('./test/metrics.tgz')
         bucketMock.expects('uploadFile')
-          .withArgs('./spec/metrics.tgz')
+          .withArgs('./test/metrics.tgz')
           .rejects(new Error('oops'))
 
         backup = Backup({
-          basePath: './spec',
+          basePath: './test',
           dataPath: 'files'
         }, chronograf, kapacitor, tar, bucket)
         return backup.create()
@@ -174,7 +174,7 @@ describe('Backup', function () {
       })
 
       after(function () {
-        rimraf.sync('./spec/tmp')
+        rimraf.sync('./test/tmp')
       })
     })
 
@@ -192,19 +192,19 @@ describe('Backup', function () {
         kapMock.expects('getTasks')
           .resolves({})
         tarMock.expects('zipFiles')
-          .withArgs(`${LOCAL_PATH}/spec/files`,
+          .withArgs(`${LOCAL_PATH}/test/files`,
             [
-              `${LOCAL_PATH}/spec/files/graphs.json`,
-              `${LOCAL_PATH}/spec/files/tasks.json`,
-              `${LOCAL_PATH}/spec/files/info.json`
+              `${LOCAL_PATH}/test/files/graphs.json`,
+              `${LOCAL_PATH}/test/files/tasks.json`,
+              `${LOCAL_PATH}/test/files/info.json`
             ])
-          .resolves('./spec/metrics.tgz')
+          .resolves('./test/metrics.tgz')
         bucketMock.expects('uploadFile')
-          .withArgs('./spec/metrics.tgz')
+          .withArgs('./test/metrics.tgz')
           .resolves({})
 
         backup = Backup({
-          basePath: './spec',
+          basePath: './test',
           dataPath: 'files'
         }, chronograf, kapacitor, tar, bucket)
         return backup.create()
@@ -219,7 +219,7 @@ describe('Backup', function () {
       })
 
       after(function () {
-        rimraf.sync('./spec/tmp')
+        rimraf.sync('./test/tmp')
       })
     })
   })
@@ -236,7 +236,7 @@ describe('Backup', function () {
           .rejects(new Error('no such tarball'))
 
         backup = Backup({
-          basePath: './spec',
+          basePath: './test',
           dataPath: 'tmp'
         }, chronograf, kapacitor, tar, bucket)
         return backup.restore()
@@ -259,7 +259,7 @@ describe('Backup', function () {
           .resolves(null)
 
         backup = Backup({
-          basePath: './spec',
+          basePath: './test',
           dataPath: 'tmp'
         }, chronograf, kapacitor, tar, bucket)
         return backup.restore()
@@ -281,19 +281,19 @@ describe('Backup', function () {
         bucketMock.expects('downloadFile')
           .withArgs('metrics.tgz')
           .resolves({
-            file: './spec/metrics.tgz',
-            dir: './spec'
+            file: './test/metrics.tgz',
+            dir: './test'
           })
         tarMock.expects('unzipFiles')
-          .withArgs(path.resolve('./spec/tmp'),
+          .withArgs(path.resolve('./test/tmp'),
             {
-              file: './spec/metrics.tgz',
-              dir: './spec'
+              file: './test/metrics.tgz',
+              dir: './test'
             })
           .resolves(undefined)
 
         backup = Backup({
-          basePath: './spec',
+          basePath: './test',
           dataPath: 'tmp'
         }, chronograf, kapacitor, tar, bucket)
         return backup.restore()
@@ -318,14 +318,14 @@ describe('Backup', function () {
         bucketMock.expects('downloadFile')
           .withArgs('metrics.tgz')
           .resolves({
-            file: './spec/metrics.tgz',
-            dir: './spec'
+            file: './test/metrics.tgz',
+            dir: './test'
           })
         tarMock.expects('unzipFiles')
-          .withArgs(path.resolve('./spec/tmp'),
+          .withArgs(path.resolve('./test/tmp'),
             {
-              file: './spec/metrics.tgz',
-              dir: './spec'
+              file: './test/metrics.tgz',
+              dir: './test'
             })
           .resolves({
             graphs: 'chronograf-data',
@@ -339,7 +339,7 @@ describe('Backup', function () {
           .rejects(new Error('bad data'))
 
         backup = Backup({
-          basePath: './spec',
+          basePath: './test',
           dataPath: 'tmp'
         }, chronograf, kapacitor, tar, bucket)
         return backup.restore()
@@ -366,14 +366,14 @@ describe('Backup', function () {
         bucketMock.expects('downloadFile')
           .withArgs('metrics.tgz')
           .resolves({
-            file: './spec/metrics.tgz',
-            dir: './spec'
+            file: './test/metrics.tgz',
+            dir: './test'
           })
         tarMock.expects('unzipFiles')
-          .withArgs(path.resolve('./spec/tmp'),
+          .withArgs(path.resolve('./test/tmp'),
             {
-              file: './spec/metrics.tgz',
-              dir: './spec'
+              file: './test/metrics.tgz',
+              dir: './test'
             })
           .resolves({
             graphs: 'chronograf-data',
@@ -387,7 +387,7 @@ describe('Backup', function () {
           .resolves({})
 
         backup = Backup({
-          basePath: './spec',
+          basePath: './test',
           dataPath: 'tmp'
         }, chronograf, kapacitor, tar, bucket)
         return backup.restore()
@@ -414,14 +414,14 @@ describe('Backup', function () {
         bucketMock.expects('downloadFile')
           .withArgs('metrics.tgz')
           .resolves({
-            file: './spec/metrics.tgz',
-            dir: './spec'
+            file: './test/metrics.tgz',
+            dir: './test'
           })
         tarMock.expects('unzipFiles')
-          .withArgs(path.resolve('./spec/tmp'),
+          .withArgs(path.resolve('./test/tmp'),
             {
-              file: './spec/metrics.tgz',
-              dir: './spec'
+              file: './test/metrics.tgz',
+              dir: './test'
             })
           .resolves({
             graphs: 'chronograf-data',
@@ -435,7 +435,7 @@ describe('Backup', function () {
           .resolves({})
 
         backup = Backup({
-          basePath: './spec',
+          basePath: './test',
           dataPath: 'tmp'
         }, chronograf, kapacitor, tar, bucket)
         return backup.restore()
